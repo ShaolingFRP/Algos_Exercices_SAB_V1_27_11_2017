@@ -16,10 +16,12 @@ ALGORITHME : JeuDELoie
 
 
 CONST
-	depart <- 0  		: ENTIER
-	fin <- 66  			: ENTIER
-	mort <- 58			: ENTIER
-	max <- 10			: ENTIER
+	depart <- 0
+	fin <- 66
+	double <- 9
+	nondouble <- 63
+	mort <- 58
+	alea <- 11
 
 VAR
 	place,des			: ENTIER
@@ -30,30 +32,30 @@ DEBUT
 	des <- 0
 
 	REPETER
-		ECRIRE "Vous etes sur la case ",place," Veuillez lancer votre des en appuyant sur Entrer"								//On dit a l'utilisateur comment avancer et sur qu'elle case il se trouve actuellement.
+		ECRIRE "Vous etes sur la case ",place," Veuillez lancer votre des en appuyant sur Entrer"																					//On dit a l'utilisateur comment avancer et sur qu'elle case il se trouve actuellement.
 		LIRE
-		des <- ALEA(2,12) 																										//On lance un dés à 11 faces (de 2 à 12 pour correspondre aux deux dés a 6 faces demandé)
+		des <- (ALEATOIRE(alea)+2)																																					//On lance un dés à 11 faces (de 2 à 12 pour correspondre aux deux dés a 6 faces demandé)
 
-		SI (((place + des) MOD double = 0) ET ((place + des)<> nondouble)) ALORS															//Si l'emplacement ou le joueur devrais être est 9/18/27/36/45 ou 54 le joueurs vois ses points doublés
-			ECRIRE "Vous avancer de ",(des * 2)," cases et vous vous trouver donc sur la case ",((place) + (des * 2))
+		SI (((place + des) MOD double = 0) ET ((place + des) <> nondouble)) ALORS																									//Si l'emplacement ou le joueur devrais être est un multiple de 9 différent de 63 le joueurs vois ses points doublés
+			ECRIRE "Bonus x2 ! : Vous avancer de ",des," cases, X2 donc de ",(des * 2)," cases et vous vous trouver donc sur la case ",((place) + (des * 2)))
 			place <- ((place) + (des*2))
 
 		SINON
-			ECRIRE "Vous avancer de ",(des)," cases et vous vous trouver donc sur la case ",(place + des)						//Sinon il avance simplement du nombre de cases normal (que les dés indiquent)
+			ECRIRE "Vous avancer de ",(des)," cases et vous vous trouver donc sur la case ",(place + des)																			//Sinon il avance simplement du nombre de cases normal (que le dés indiquent)
 			place <- (place + des)
 		FINSI
 
-		SI ((place + des) = (mort)) ALORS																					//Si le joueur arrive sur la case 58 il retourne à la case depart
-			ECRIRE "Vous retournez a la case depart"
+		SI ((place) = (mort)) ALORS																																					//Si le joueur arrive sur la case 58 il retourne à la case depart
+			ECRIRE "Malus tete de mort ! : Vous retournez a la case depart"
 			place <- depart
 		FINSI
 
-		SI (place > fin) ALORS																									//Si sa place actuelle + les points acquis le déplace sur un emplacement plus loin que 66 on lui indique que ses points sont trop élevés et ont lui indique sa nouvelle position
-			ECRIRE "Votre place est plus eleve que 66 donc vous reculez de : ",(place - fin)," cases"
+		SI (place > fin) ALORS																																						//Si sa place actuelle + les points acquis le déplace sur un emplacement plus grand que 66 on lui indique que ses points sont trop élevés
+			ECRIRE "Votre place est plus eleve que 66 donc vous reculez de : ",(place - fin)," cases en partant de 66"																//On lui indique donc de combien de cases il recule et par la boucle on lui indique sa nouvelle position.
 			place <- (fin - (place - fin))
 		FINSI
 
-	JUSQUA (place = fin)																										//La partie se termine donc quand le joueur atteint 66 points
+	JUSQUA (place = fin)																																							//La partie se termine donc quand le joueur atteint 66 points
 	ECRIRE "Fin de la partie."
 FIN
 }
@@ -69,7 +71,6 @@ CONST
 	double = 9;
 	nondouble = 63;
 	mort = 58;
-
 	alea = 11;
 
 VAR
@@ -83,10 +84,13 @@ BEGIN
 	des := 0;
 
 	REPEAT
+
 		WRITELN('Vous etes sur la case ',place,' Veuillez lancer votre des en appuyant sur Entrer');
 		READLN;
 		RANDOMIZE;
 		des := (RANDOM(alea)+2);
+
+		clrscr;
 
 		IF (((place + des) MOD double = 0) AND ((place + des) <> nondouble)) THEN
 
