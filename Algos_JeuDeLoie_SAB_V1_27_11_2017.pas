@@ -70,7 +70,7 @@ CONST
 	nondouble = 63;
 	mort = 58;
 
-	alea = 10;
+	alea = 11;
 
 VAR
 	place,des	:INTEGER;
@@ -106,7 +106,7 @@ BEGIN
 		IF ((place) = (mort)) THEN
 
 			BEGIN
-				WRITELN('Vous retournez a la case depart');
+				WRITELN('Malus tete de mort ! : Vous retournez a la case depart');
 				place := depart;
 			END;
 
